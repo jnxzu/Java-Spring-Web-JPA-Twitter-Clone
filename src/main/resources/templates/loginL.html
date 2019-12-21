@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var signupBlock = $("#signup").parent();
+            var loginBlock = $("#login").parent().parent();
+            $("#login").click(function () {
+                if ($(loginBlock).hasClass("slide-up")) {
+                    $(loginBlock).removeClass("slide-up");
+                    $(signupBlock).addClass("slide-up");
+                }
+            })
+            $("#signup").click(function () {
+                if ($(signupBlock).hasClass("slide-up")) {
+                    $(signupBlock).removeClass("slide-up");
+                    $(loginBlock).addClass("slide-up");
+                }
+            })
+        })
+    </script>
+    <title>Login</title>
+</head>
+
+<body>
+    <h1>Welcome to CHIRPER</h1>
+    <div class="form-structor">
+        <div class="signup slide-up">
+            <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
+            <form method="POST" th:action="@{/signup}" th:object="${chirperuser}">
+                <div class="form-holder">
+                    <input type="text" class="input" th:errorclass="input-error" th:field="*{firstName}"
+                        placeholder="First Name" />
+                    <input type="text" class="input" th:errorclass="input-error" th:field="*{lastName}"
+                        placeholder="Last Name" />
+                    <input type="text" class="input" th:errorclass="input-error" th:field="*{nick}"
+                        placeholder="Nickname" />
+                    <input type="password" class="input" th:errorclass="input-error" th:field="*{password}"
+                        placeholder="Password" />
+                    <input type="text" class="input" th:errorclass="input-error" th:field="*{email}"
+                        placeholder="Email" />
+                </div>
+                <button type="submit" class="submit-btn">Sign up</button>
+            </form>
+        </div>
+        <div class="login">
+            <div class="center">
+                <h2 class="form-title" id="login"><span>or</span>Log in</h2>
+                <form method="POST" th:action="@{/login}" th:object="${chirperlogin}">
+                    <div class="form-holder">
+                        <input type="text" class="input" th:errorclass="input-error" th:field="*{nickname}"
+                            placeholder="Nickname" />
+                        <input type="password" class="input" th:errorclass="input-error" th:field="*{password}"
+                            placeholder="Password" />
+                    </div>
+                    <button type="submit" class="submit-btn">Log in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
