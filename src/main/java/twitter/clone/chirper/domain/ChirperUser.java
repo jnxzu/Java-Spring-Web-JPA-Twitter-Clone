@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
@@ -19,7 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChirperUser {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private int id;
     @NotEmpty
     @Size(min = 2)
@@ -40,12 +42,4 @@ public class ChirperUser {
     private String email;
     @ManyToMany
     private List<Message> messages;
-
-    public ChirperUser(String firstName, String lastName, String nick, String password, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nick = nick;
-        this.password = password;
-        this.email = email;
-    }
 }

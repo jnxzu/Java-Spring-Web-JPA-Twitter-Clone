@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
@@ -28,10 +27,10 @@
 </head>
 
 <body>
-    <h1>Welcome to CHIRPER</h1>
+    <h1>Welcome to CHIRPER!</h1>
     <div class="form-structor">
         <div class="signup slide-up">
-            <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
+            <h3 class="form-title" id="signup"><span>or</span>Sign up</h3>
             <form method="POST" th:action="@{/signup}" th:object="${chirperuser}">
                 <div class="form-holder">
                     <input type="text" class="input" th:errorclass="input-error" th:field="*{firstName}"
@@ -50,7 +49,7 @@
         </div>
         <div class="login">
             <div class="center">
-                <h2 class="form-title" id="login"><span>or</span>Log in</h2>
+                <h3 class="form-title" id="login"><span>or</span>Log in</h3>
                 <form method="POST" th:action="@{/login}" th:object="${chirperlogin}">
                     <div class="form-holder">
                         <input type="text" class="input" th:errorclass="input-error" th:field="*{nickname}"
@@ -63,6 +62,8 @@
             </div>
         </div>
     </div>
+    <h3 th:if="${noUser!=null}">User not found.</h3>
+    <h3 th:if="${wrongPw!=null}">Wrong password.</h3>
 </body>
 
 </html>

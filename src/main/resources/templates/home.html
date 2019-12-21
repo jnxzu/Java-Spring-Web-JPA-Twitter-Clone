@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CHIRPER</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-side"></div>
+        <div id="header-center"><img src="img/logo.jpg" alt="the fucking bird">CHIRPER<img src="img/logo.jpg"
+                alt="the fucking bird"></div>
+        <div class="header-side"><button id="logout-btn">LOGOUT</button></div>
+    </header>
+    <div id="messages-container">
+        <div id="new-message">
+            <form>
+                <textarea placeholder="How YOU doin?" maxlength="140"></textarea>
+                <div id="new-msg-bottom-bar">
+                    <div id="new-msg-bottom-bar-left"><button id="add-img">IMAGE</button></div>
+                    <button type="submit" id="send-msg">POST</button>
+                </div>
+            </form>
+        </div>
+        <div id="feed">
+            <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
+                <a
+                    th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"></a>
+                <p th:text="${msg.content}"></p>
+                <div class="date-container">
+                    <span th:text="${msg.create_date}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
