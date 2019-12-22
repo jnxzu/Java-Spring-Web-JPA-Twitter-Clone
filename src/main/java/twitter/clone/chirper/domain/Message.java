@@ -1,6 +1,7 @@
 package twitter.clone.chirper.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,22 +13,27 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
+    @Column(columnDefinition = "serial", name = "msg_id")
     private int id;
     @NotEmpty
     @Size(max = 140)
     private String content;
-    private Date create_date;
+    @DateTimeFormat
+    private Timestamp create_date;
     private String attachments;
-    @ManyToMany(mappedBy = "messages")
+    @ManyToMany
     private List<ChirperUser> authors;
+
+    public Message() {
+        this.create_date = new Timestamp((new java.util.Date().getTime()));
+    }
 }

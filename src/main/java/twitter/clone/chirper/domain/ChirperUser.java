@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class ChirperUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
+    @Column(columnDefinition = "serial", name = "user_id")
     private int id;
     @NotEmpty
     @Size(min = 2)
@@ -40,6 +40,6 @@ public class ChirperUser {
     @NotEmpty
     @Column(unique = true)
     private String email;
-    @ManyToMany
+    @ManyToMany(mappedBy = "authors")
     private List<Message> messages;
 }

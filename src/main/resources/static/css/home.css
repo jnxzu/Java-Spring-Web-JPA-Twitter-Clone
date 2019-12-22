@@ -47,7 +47,8 @@ header {
 }
 #logout-btn,
 #send-msg,
-#add-img {
+#add-img,
+#profile {
   border: none;
   background: var(--purpurish);
   color: var(--white-accent);
@@ -56,7 +57,8 @@ header {
 }
 #logout-btn:hover,
 #send-msg:hover,
-#add-img:hover {
+#add-img:hover,
+#profile:hover {
   background: var(--orangeish);
 }
 header img {
@@ -130,4 +132,10 @@ header img {
 .date-container {
   display: flex;
   flex-direction: row-reverse;
+}
+.input-error {
+  text-decoration: underline red;
+}
+.input-error::placeholder {
+  content: "You didn't type a message.";
 }

@@ -5,19 +5,27 @@
     <meta charset="UTF-8">
     <title>CHIRPER</title>
     <link rel="stylesheet" href="css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#logout-btn").click(function () {
+                location.href = "home/logout";
+            })
+        })
+    </script>
 </head>
 
 <body>
     <header>
-        <div class="header-side"></div>
+        <div class="header-side"><button id="profile">MY PROFILE</button></div>
         <div id="header-center"><img src="img/logo.jpg" alt="the fucking bird">CHIRPER<img src="img/logo.jpg"
                 alt="the fucking bird"></div>
         <div class="header-side"><button id="logout-btn">LOGOUT</button></div>
     </header>
     <div id="messages-container">
         <div id="new-message">
-            <form>
-                <textarea placeholder="How YOU doin?" maxlength="140"></textarea>
+            <form method="POST" th:action="@{home}" th:object="${message}">
+                <textarea maxlength="140" th:errorclass="input-error" th:field="*{content}"></textarea>
                 <div id="new-msg-bottom-bar">
                     <div id="new-msg-bottom-bar-left"><button id="add-img">IMAGE</button></div>
                     <button type="submit" id="send-msg">POST</button>
@@ -30,7 +38,7 @@
                     th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"></a>
                 <p th:text="${msg.content}"></p>
                 <div class="date-container">
-                    <span th:text="${msg.create_date}"></span>
+                    <span th:text="${#dates.format(msg.create_date,'HH:mm dd.MM.yyyy')}"></span>
                 </div>
             </div>
         </div>

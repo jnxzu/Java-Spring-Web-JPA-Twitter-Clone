@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import twitter.clone.chirper.domain.ChirperLogin;
 import twitter.clone.chirper.domain.ChirperUser;
+import twitter.clone.chirper.domain.CurrentUser;
 import twitter.clone.chirper.domain.UserState;
 import twitter.clone.chirper.service.UserManager;
 
@@ -21,6 +22,9 @@ public class LoginController {
     @Autowired
     @Qualifier("us")
     private UserState us;
+    @Autowired
+    @Qualifier("cu")
+    private CurrentUser cu;
 
     @Autowired
     UserManager um;
@@ -40,6 +44,7 @@ public class LoginController {
             us.setLogged(true);
             if (chirperlogin.getNickname().equals("administrator"))
                 us.setAdmin(true);
+            cu.setCurrent(um.findByNick(chirperlogin.getNickname()));
             return "redirect:/home";
         }
         model.addAttribute("chirperuser", new ChirperUser());
@@ -58,6 +63,7 @@ public class LoginController {
         if (signupValidation(chirperuser).equals("ok")) {
             um.save(chirperuser);
             us.setLogged(true);
+            cu.setCurrent(chirperuser);
             return "redirect:/home";
         }
         model.addAttribute("chirperlogin", new ChirperLogin());

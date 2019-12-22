@@ -1,11 +1,22 @@
 package twitter.clone.chirper.controller;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Collections;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import twitter.clone.chirper.domain.CurrentUser;
 import twitter.clone.chirper.domain.Message;
 import twitter.clone.chirper.domain.UserState;
 import twitter.clone.chirper.service.MessageManager;
@@ -15,6 +26,9 @@ public class HomeController {
     @Autowired
     @Qualifier("us")
     private UserState us;
+    @Autowired
+    @Qualifier("cu")
+    private CurrentUser cu;
 
     @Autowired
     MessageManager mm;
@@ -22,10 +36,37 @@ public class HomeController {
     @GetMapping("home")
     public String home(final Model model) {
         if (us.isLogged()) {
-            model.addAttribute("newmsg", new Message());
-            model.addAttribute("messages", mm.findAll());
+            model.addAttribute("message", new Message());
+            List<Message> allMsgs = mm.findAll();
+            Collections.reverse(allMsgs);
+            model.addAttribute("messages", allMsgs);
             return "home";
         }
+        return "redirect:/";
+    }
+
+    @PostMapping("home")
+    public String newmsg(final Model model, @Valid final Message msg, Errors errors) {
+        if (!errors.hasErrors()) {
+            msg.setAuthors(Arrays.asList(cu.getCurrent()));
+            mm.save(msg);
+            model.addAttribute("message", new Message());
+            List<Message> allMsgs = mm.findAll();
+            Collections.reverse(allMsgs);
+            model.addAttribute("messages", allMsgs);
+            return "redirect:/home";
+        }
+        List<Message> allMsgs = mm.findAll();
+        Collections.reverse(allMsgs);
+        model.addAttribute("messages", allMsgs);
+        return "home";
+    }
+
+    @GetMapping("home/logout")
+    public String logout() {
+        us.setAdmin(false);
+        us.setLogged(false);
+        cu.setCurrent(null);
         return "redirect:/";
     }
 }
