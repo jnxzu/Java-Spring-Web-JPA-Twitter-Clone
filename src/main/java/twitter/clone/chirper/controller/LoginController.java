@@ -64,6 +64,7 @@ public class LoginController {
             um.save(chirperuser);
             us.setLogged(true);
             cu.setCurrent(chirperuser);
+            // TODO EMAIL CONFIRMATION
             return "redirect:/home";
         }
         model.addAttribute("chirperlogin", new ChirperLogin());

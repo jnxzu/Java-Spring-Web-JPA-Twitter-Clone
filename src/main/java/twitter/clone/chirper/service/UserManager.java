@@ -15,6 +15,8 @@ public interface UserManager extends JpaRepository<ChirperUser, Integer> {
 
     void delete(ChirperUser user);
 
+    ChirperUser findById(int id);
+
     ChirperUser getOneById(int id);
 
     List<ChirperUser> findAll();

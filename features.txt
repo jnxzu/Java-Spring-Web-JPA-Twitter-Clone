@@ -1,0 +1,25 @@
+Możliwość edycji wiadomości/wpisu użytkownika
+Możliwość usunięcia wiadomości/wpisu użytkownika
+
+Wyszukanie danej wiadomości/wpisu danego użytkownika lub konkretnego wpisu/wiadomości
+
+Wyświetlenie wszystkich osób z aplikacji (z poziomu konta admin)
+Wyszukiwanie danej osoby z aplikacji (z poziomu konta admin)
+
+Dodanie obrazu do wpisu/wiadomości
+Dołączanie załączników do wpisu/wiadomości
+Walidacja dodanych załączników
+
+Możliwość zapisu dodanej wiadomości/wpisu (w przypadku załączników powinny się tutaj znaleźć linki http)
+Eksportowanie danych do pliku .csv oraz .json (z poziomu konta admin)
+
+Internacjonalizacja aplikacji (dwa języki)
+Wysyłanie wiadomości email potwierdzającego rejestracje użytkownika
+
+Testowanie aplikacji.
+Użycie bazy danych nie będącej w pliku i pamięci
+Zaawansowane wpisy/wiadomości: obsługa html czy emotikony
+Ładowanie wiadomości z pliku tekstowego
+
+Heroku
+CI

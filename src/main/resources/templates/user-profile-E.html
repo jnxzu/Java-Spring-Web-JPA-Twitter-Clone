@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>CHIRPER</title>
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/profile.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -18,11 +18,24 @@
             $("#profile").click(function () {
                 location.href = "profile?id=[[${ cuid }]]";
             })
+            $("#home").click(function () {
+                location.href = "home";
+            })
             $("#search").keyup(function (e) {
                 if (e.keyCode == 13 && $("#search").val()) {
                     location.href = "search?phrase=" + $("#search").val();
                 }
             });
+            $("#edit-user").click(function () {
+                $("#profile-info").attr("id", "profile-info-edit");
+                $("#info-hs").hide();
+                $("#edit-user").hide();
+                $("#delete-user").hide();
+                setTimeout(() => {
+                    $("#edit-form").show();
+                    $("#save-edit").show();
+                }, 1000);
+            })
         })
     </script>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -56,20 +69,30 @@
         <div id="logout-div" class="header-side">
             <button id="logout-btn">LOGOUT</button>
             <button id="admin" th:if="${admin}">ADMIN PANEL</button>
-            <button id="profile">MY PROFILE</button>
+            <button th:if="!${myProfile}" id="profile">MY PROFILE</button>
+            <button id="home">HOME</button>
         </div>
     </header>
-    <div id="messages-container">
-        <div id="new-message">
-            <form method="POST" th:action="@{home}" th:object="${message}">
-                <textarea maxlength="140" th:field="*{content}" th:placeholder="${#fields.hasErrors('content')} ? 'Cannot post empty Chirp!' : 'How YOU doin?'"></textarea>
-                <div id="new-msg-bottom-bar">
-                    <div id="new-msg-bottom-bar-left"><button id="add-img">IMAGE</button></div>
-                    <button type="submit" id="send-msg">POST</button>
-                </div>
+    <div id="profile-info">
+        <div id="edit-form-container" th:if="${myProfile}">
+            <form id="edit-form" method="POST" th:action="@{editUser}" th:object="${profileUser}">
+                <input type="text" class="input inh1" th:errorclass="input-error" th:field="*{firstName}"
+                    placeholder="First Name" />
+                <input type="text" class="input inh1" th:errorclass="input-error" th:field="*{nick}"
+                    placeholder="Nickname" />
+                <input type="text" class="input inh1" th:errorclass="input-error" th:field="*{lastName}"
+                    placeholder="Last Name" /><br />
+                <input type="text" class="input inh3" th:errorclass="input-error" th:field="*{email}"
+                    placeholder="Email" /><br />
+                <input type="password" class="input" th:errorclass="input-error" th:field="*{password}"
+                    placeholder="Password" /><br />
+                <button type="submit" id="save-edit">SAVE</button>
             </form>
         </div>
+    </div>
+    <div id="messages-container">
         <div id="feed">
+            <h1 th:if="${notFound}">No chirps found.</h1>
             <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
                 <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
                     th:href="@{profile?id=}+${msg.authors[0].id}"></a>

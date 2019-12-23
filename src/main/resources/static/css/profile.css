@@ -1,0 +1,87 @@
+#messages-container {
+  margin-top: 0;
+}
+#profile-info {
+  margin-top: 8vh;
+  background-color: var(--main-black);
+  width: 45vw;
+  min-height: 20vh;
+  height: auto;
+  border-radius: 17px;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 1s ease;
+}
+#profile-info-edit {
+  margin-top: 8vh;
+  background-color: var(--main-black);
+  width: 70vw;
+  min-height: 20vh;
+  height: auto;
+  border-radius: 17px;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 1s ease;
+}
+#profile-info h1,
+#profile-info h3 {
+  color: var(--white-accent);
+}
+#info-hs {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#profile-controls {
+  display: flex;
+  justify-content: center;
+}
+#profile-controls-separator {
+  width: 1vmin;
+}
+#edit-user,
+#delete-user,
+#save-edit {
+  border: none;
+  background: var(--purpurish);
+  color: var(--white-accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#edit-user:hover,
+#delete-user:hover,
+#save-edit:hover {
+  background: var(--orangeish);
+}
+#edit-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#edit-form {
+  margin: 0 auto;
+  text-align: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+#edit-form input {
+  width: auto;
+  margin-bottom: 2vmin;
+  text-align: center;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--purpurish);
+  outline: none;
+  color: var(--white-accent);
+}
+.inh1 {
+  font-size: 2em;
+}
+.inh3 {
+  font-size: 1.17em;
+}

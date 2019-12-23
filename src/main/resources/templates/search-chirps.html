@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'Search: ' + searchphrase}"></title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/search.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#logout-btn").click(function () {
+                location.href = "home/logout";
+            })
+            $("#admin").click(function () {
+                location.href = "admin-page";
+            })
+            $("#profile").click(function () {
+                location.href = "profile?id=[[${ cuid }]]";
+            })
+            $("#home").click(function () {
+                location.href = "home";
+            })
+            $("#search").keyup(function (e) {
+                if (e.keyCode == 13 && $("#search").val()) {
+                    location.href = "search?phrase=" + $("#search").val();
+                }
+            });
+        })
+    </script>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 28" id="path">
+            <path
+                d="M32.9418651,-20.6880772 C37.9418651,-20.6880772 40.9418651,-16.6880772 40.9418651,-12.6880772 C40.9418651,-8.68807717 37.9418651,-4.68807717 32.9418651,-4.68807717 C27.9418651,-4.68807717 24.9418651,-8.68807717 24.9418651,-12.6880772 C24.9418651,-16.6880772 27.9418651,-20.6880772 32.9418651,-20.6880772 L32.9418651,-29.870624 C32.9418651,-30.3676803 33.3448089,-30.770624 33.8418651,-30.770624 C34.08056,-30.770624 34.3094785,-30.6758029 34.4782612,-30.5070201 L141.371843,76.386562"
+                transform="translate(83.156854, 22.171573) rotate(-225.000000) translate(-83.156854, -22.171573)">
+            </path>
+        </symbol>
+    </svg>
+</head>
+<!-- https://codepen.io/aaroniker/pen/XyXzYp -->
+
+<body>
+    <header>
+        <div class="header-side">
+            <div class="search">
+                <input id="search" type="text" placeholder="">
+                <div>
+                    <svg>
+                        <use xlink:href="#path">
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="header-center">
+            <img src="img/logo.jpg" alt="the fucking bird">
+            CHIRPER
+            <img src="img/logo.jpg" alt="the fucking bird"></div>
+        <div id="logout-div" class="header-side">
+            <button id="logout-btn">LOGOUT</button>
+            <button id="admin" th:if="${admin}">ADMIN PANEL</button>
+            <button id="profile">MY PROFILE</button>
+            <button id="home">HOME</button>
+        </div>
+    </header>
+    <div id="messages-container">
+        <div id="feed">
+            <h1 th:if="${notFound}">No chirps found.</h1>
+            <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
+                <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
+                    th:href="@{profile?id=}+${msg.authors[0].id}"></a>
+                <p th:text="${msg.content}"></p>
+                <div class="date-container">
+                    <span th:text="${#dates.format(msg.create_date,'HH:mm dd.MM.yyyy')}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
