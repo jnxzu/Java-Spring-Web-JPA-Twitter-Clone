@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Admin Panel</title>
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/admin.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -21,6 +21,11 @@
             $("#search").keyup(function (e) {
                 if (e.keyCode == 13 && $("#search").val()) {
                     location.href = "search?phrase=" + $("#search").val();
+                }
+            });
+            $("#find-nickname").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    location.href = "admin?nick=" + $("#find-nickname").val();
                 }
             });
         })
@@ -56,15 +61,16 @@
             <button id="home">HOME</button>
         </div>
     </header>
-    <div id="messages-container">
+    <div id="feed-container">
+        <div id="search-user">
+            <input id="find-nickname" />
+        </div>
         <div id="feed">
-            <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
-                <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
-                    th:href="@{profile?id=}+${msg.authors[0].id}"></a>
-                <p th:text="${msg.content}"></p>
-                <div class="date-container">
-                    <span th:text="${#dates.format(msg.create_date,'HH:mm dd.MM.yyyy')}"></span>
-                </div>
+            <div class="user" th:each="usr: ${users}" th:id="${usr.id}">
+                <a th:href="@{profile?id=}+${usr.id}"
+                    th:text="${usr.firstName + ' &quot;' + usr.nick + '&quot; ' + usr.lastName}"></a>
+                <p th:text="${usr.email}"></p>
+                <p>Password: <span class="pw" th:text="${usr.password}"></span></p>
             </div>
         </div>
     </div>

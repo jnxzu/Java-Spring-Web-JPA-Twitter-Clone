@@ -13,7 +13,7 @@
                 location.href = "home/logout";
             })
             $("#admin").click(function () {
-                location.href = "admin-page";
+                location.href = "admin";
             })
             $("#profile").click(function () {
                 location.href = "profile?id=[[${ cuid }]]";
@@ -59,7 +59,7 @@
             <button id="profile">MY PROFILE</button>
         </div>
     </header>
-    <div id="messages-container">
+    <div id="feed-container">
         <div id="new-message">
             <form method="POST" th:action="@{home}" th:object="${message}">
                 <textarea maxlength="140" th:field="*{content}" th:placeholder="${#fields.hasErrors('content')} ? 'Cannot post empty Chirp!' : 'How YOU doin?'"></textarea>

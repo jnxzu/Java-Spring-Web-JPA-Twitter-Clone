@@ -13,7 +13,7 @@
                 location.href = "home/logout";
             })
             $("#admin").click(function () {
-                location.href = "admin-page";
+                location.href = "admin";
             })
             $("#profile").click(function () {
                 location.href = "profile?id=[[${ cuid }]]";
@@ -62,7 +62,7 @@
             <button id="home">HOME</button>
         </div>
     </header>
-    <div id="messages-container">
+    <div id="feed-container">
         <div id="feed">
             <h1 th:if="${notFound}">No chirps found.</h1>
             <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,9 +53,9 @@ public class ProfileController {
     }
 
     @PostMapping("editUser")
-    public String editUser(@Valid final ChirperUser user, Errors errors, final Model model, @RequestParam int id) {
+    public String editUser(@Valid @ModelAttribute("profileUser") ChirperUser user, Errors errors, final Model model,
+            @RequestParam int id) {
         if (errors.hasErrors()) {
-            model.addAttribute("profileUser", um.findById(id));
             model.addAttribute("cuid", cu.getCurrent().getId());
             model.addAttribute("myProfile", cu.getCurrent().getId() == id);
             model.addAttribute("admin", us.isAdmin());
@@ -62,7 +63,6 @@ public class ProfileController {
             Collections.reverse(msgs);
             model.addAttribute("messages", msgs);
             model.addAttribute("notFound", msgs.isEmpty());
-            // TODO FIX THIS ERROR BINDING
             return "user-profile-E";
         }
         updateUser(user, id);

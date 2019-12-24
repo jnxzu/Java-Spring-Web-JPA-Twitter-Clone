@@ -1,0 +1,37 @@
+#search-user {
+  background-color: var(--main-black);
+  height: 4vw;
+  padding: 2vmin;
+  border-radius: 17px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#search-user input {
+  text-align: center;
+  width: 50%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--purpurish);
+  color: var(--white-accent);
+  font-size: 1.5em;
+}
+.user {
+  background: var(--main-black);
+  border-radius: 17px;
+  padding: 2vmin;
+  margin-bottom: 1.5vh;
+}
+.user a {
+  font-size: larger;
+  font-weight: 700;
+}
+.pw {
+  background-color: var(--white-accent);
+  transition: all 0.5s ease;
+}
+.pw:hover {
+  background-color: var(--main-black);
+  transition: all 0.5s ease;
+}

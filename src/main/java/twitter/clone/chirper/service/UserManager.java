@@ -11,6 +11,8 @@ public interface UserManager extends JpaRepository<ChirperUser, Integer> {
 
     ChirperUser findByNick(String nick);
 
+    ChirperUser findByNickIgnoreCaseContaining(String nick);
+
     ChirperUser findByEmail(String email);
 
     void delete(ChirperUser user);
