@@ -40,6 +40,16 @@ public class LoginController {
     @PostMapping("login")
     public String login(@Valid @ModelAttribute("chirperlogin") ChirperLogin chirperlogin, BindingResult result,
             final Model model) {
+        model.addAttribute("chirperuser", new ChirperUser());
+        if (result.hasErrors()) {
+            return "loginL";
+        }
+        if (loginValidation(chirperlogin).equals("nf")) {
+            model.addAttribute("noUser", true);
+        }
+        if (loginValidation(chirperlogin).equals("pw")) {
+            model.addAttribute("wrongPw", true);
+        }
         if (loginValidation(chirperlogin).equals("ok")) {
             us.setLogged(true);
             if (chirperlogin.getNickname().equals("administrator"))
@@ -47,32 +57,28 @@ public class LoginController {
             cu.setCurrent(um.findByNick(chirperlogin.getNickname()));
             return "redirect:/home";
         }
-        model.addAttribute("chirperuser", new ChirperUser());
-        if (loginValidation(chirperlogin).equals("nf")) {
-            model.addAttribute("noUser", true);
-        }
-        if (loginValidation(chirperlogin).equals("pw")) {
-            model.addAttribute("wrongPw", true);
-        }
         return "loginL";
     }
 
     @PostMapping("signup")
     public String signup(@Valid @ModelAttribute("chirperuser") ChirperUser chirperuser, BindingResult result,
             final Model model) {
+        model.addAttribute("chirperlogin", new ChirperLogin());
+        if (result.hasErrors()) {
+            return "loginS";
+        }
+        if (signupValidation(chirperuser).equals("nick")) {
+            model.addAttribute("nick", true);
+        }
+        if (signupValidation(chirperuser).equals("email")) {
+            model.addAttribute("email", true);
+        }
         if (signupValidation(chirperuser).equals("ok")) {
             um.save(chirperuser);
             us.setLogged(true);
             cu.setCurrent(chirperuser);
             // TODO EMAIL CONFIRMATION
             return "redirect:/home";
-        }
-        model.addAttribute("chirperlogin", new ChirperLogin());
-        if (signupValidation(chirperuser).equals("nick")) {
-            model.addAttribute("nick", true);
-        }
-        if (signupValidation(chirperuser).equals("email")) {
-            model.addAttribute("email", true);
         }
         return "loginS";
     }
