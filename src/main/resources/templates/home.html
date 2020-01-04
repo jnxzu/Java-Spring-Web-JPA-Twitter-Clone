@@ -22,6 +22,37 @@
                 if (e.keyCode == 13 && $("#search").val()) {
                     location.href = "search?phrase=" + $("#search").val();
                 }
+            })
+            $(".del-msg").click(function () {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "home/deletemsg",
+                    data: {
+                        "msgId": $(this).parent().parent().attr("id")
+                    },
+                    statusCode: {
+                        200: function () {
+                            location.reload(true);
+                        }
+                    }
+                })
+            })
+            $(document).on("change", "#add-img", function () {
+                var type = $(this)[0].files[0].type
+                var size = $(this)[0].files[0].size
+                if (type == "image/png") {
+                    if (size < 1000000) {
+                        $("#add-img-label").addClass("added-img")
+                        $("#add-img-label").text("FILE UPLOADED")
+                    } else {
+                        $("#add-img-label").removeClass("added-img")
+                        $("#add-img-label").text("FILE TOO BIG")
+                    }
+                } else {
+                    $("#add-img-label").removeClass("added-img")
+                    $("#add-img-label").text("INCORRECT FILE")
+                }
             });
         })
     </script>
@@ -61,19 +92,28 @@
     </header>
     <div id="feed-container">
         <div id="new-message">
-            <form method="POST" th:action="@{home}" th:object="${message}">
+            <form method="POST" enctype="multipart/form-data" th:action="@{home}" th:object="${message}">
                 <textarea maxlength="140" th:field="*{content}" th:placeholder="${#fields.hasErrors('content')} ? 'Cannot post empty Chirp!' : 'How YOU doin?'"></textarea>
                 <div id="new-msg-bottom-bar">
-                    <div id="new-msg-bottom-bar-left"><button id="add-img">IMAGE</button></div>
+                    <div id="new-msg-bottom-bar-left">
+                        <input type="file" name="image" id="add-img"/>
+                        <label for="add-img" id="add-img-label">UPLOAD IMAGE</label>
+                    </div>
                     <button type="submit" id="send-msg">POST</button>
                 </div>
             </form>
         </div>
         <div id="feed">
             <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
-                <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
-                    th:href="@{profile?id=}+${msg.authors[0].id}"></a>
+                <div class="name-del-holder">
+                    <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
+                        th:href="@{profile?id=}+${msg.authors[0].id}"></a>
+                    <span></span>
+                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}">DELETE</button>
+                    <button class="edit-msg" th:if="${msg.authors[0].id==cuid}">EDIT</button>
+                </div>
                 <p th:text="${msg.content}"></p>
+                <img th:if="${msg.hasImage}" th:src="${'img/messages/' + msg.id + '.png'}" th:alt="${'message ' + msg.id + ' image'}">
                 <div class="date-container">
                     <span th:text="${#dates.format(msg.create_date,'HH:mm dd.MM.yyyy')}"></span>
                 </div>

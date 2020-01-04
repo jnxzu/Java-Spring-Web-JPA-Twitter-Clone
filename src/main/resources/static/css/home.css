@@ -2,7 +2,7 @@
   width: 5vw;
 }
 #send-msg,
-#add-img {
+#add-img-label {
   border: none;
   background: var(--purpurish);
   color: var(--white-accent);
@@ -10,7 +10,7 @@
   transition: all 0.3s ease;
 }
 #send-msg:hover,
-#add-img:hover {
+#add-img-label:hover {
   background: var(--orangeish);
 }
 #new-message {
@@ -44,6 +44,20 @@
   height: 100%;
   flex-grow: 1;
 }
-#new-msg-bottom-bar-left button {
-  height: 100%;
+#add-img {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+#add-img + label {
+  display: inline-block;
+  justify-content: center;
+  vertical-align: middle;
+  padding: 1vmin;
+}
+.added-img {
+  border-radius: 10px;
 }

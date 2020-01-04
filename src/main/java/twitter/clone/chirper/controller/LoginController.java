@@ -1,5 +1,12 @@
 package twitter.clone.chirper.controller;
 
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +84,7 @@ public class LoginController {
             um.save(chirperuser);
             us.setLogged(true);
             cu.setCurrent(chirperuser);
-            // TODO EMAIL CONFIRMATION
+            confirmationEmail(chirperuser.getEmail());
             return "redirect:/home";
         }
         return "loginS";
@@ -100,5 +107,34 @@ public class LoginController {
         if (!find.getPassword().equals(cl.getPassword()))
             return "pw";
         return "ok";
+    }
+
+    public void confirmationEmail(String email) {
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        String from = "chirpverify";
+        String pass = "chirperpw";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            message.setFrom(new InternetAddress(from));
+            InternetAddress toAddress = new InternetAddress(email);
+            message.addRecipient(Message.RecipientType.TO, toAddress);
+            message.setSubject("Welcome to CHIRPER!");
+            message.setText("Thanks for joining us!");
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -176,3 +176,21 @@ h3 {
   text-align: center;
   color: var(--main-black);
 }
+.name-del-holder {
+  display: flex;
+}
+.name-del-holder span {
+  flex-grow: 1;
+}
+.name-del-holder button {
+  height: 17px;
+  margin-right: 1vmin;
+  border: none;
+  background: var(--purpurish);
+  color: var(--white-accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.name-del-holder button:hover {
+  background: var(--orangeish);
+}

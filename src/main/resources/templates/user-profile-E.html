@@ -25,7 +25,22 @@
                 if (e.keyCode == 13 && $("#search").val()) {
                     location.href = "search?phrase=" + $("#search").val();
                 }
-            });
+            })
+            $(".del-msg").click(function () {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "home/deletemsg",
+                    data: {
+                        "msgId": $(this).parent().parent().attr("id")
+                    },
+                    statusCode: {
+                        200: function () {
+                            location.reload(true);
+                        }
+                    }
+                })
+            })
             $("#edit-user").click(function () {
                 $("#profile-info").attr("id", "profile-info-edit");
                 $("#info-hs").hide();

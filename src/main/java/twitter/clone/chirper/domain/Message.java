@@ -28,7 +28,7 @@ public class Message {
     private String content;
     @DateTimeFormat
     private Timestamp create_date;
-    private String attachments;
+    private Boolean hasImage;
     @ManyToMany
     private List<ChirperUser> authors;
 

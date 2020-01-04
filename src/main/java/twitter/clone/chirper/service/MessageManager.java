@@ -13,6 +13,8 @@ public interface MessageManager extends JpaRepository<Message, Integer> {
 
     void delete(Message msg);
 
+    void deleteById(int id);
+
     @Transactional
     void deleteByAuthors_Id(int id);
 

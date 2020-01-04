@@ -1,5 +1,7 @@
 package twitter.clone.chirper.controller;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -8,11 +10,18 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import twitter.clone.chirper.domain.CurrentUser;
 import twitter.clone.chirper.domain.Message;
@@ -31,6 +40,9 @@ public class HomeController {
     @Autowired
     MessageManager mm;
 
+    @Value("${app.upload.dir}")
+    public String uploadDir;
+
     @GetMapping("home")
     public String home(final Model model) {
         if (us.isLogged()) {
@@ -45,11 +57,19 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @PostMapping("home")
-    public String newmsg(final Model model, @Valid final Message msg, Errors errors) {
+    @RequestMapping(value = "home", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+    public String newmsg(final Model model, @Valid final Message msg, Errors errors,
+            @RequestParam(name = "image", required = false) MultipartFile file) throws IOException {
         if (!errors.hasErrors()) {
             msg.setAuthors(Arrays.asList(cu.getCurrent()));
+            msg.setHasImage(file == null ? false : true);
             mm.save(msg);
+            if (file != null) {
+                final String imagePath = "src/main/resources/static/img/messages/";
+                FileOutputStream output = new FileOutputStream(imagePath + msg.getId() + ".png");
+                output.write(file.getBytes());
+                output.close();
+            }
             model.addAttribute("message", new Message());
             List<Message> allMsgs = mm.findAll();
             Collections.reverse(allMsgs);
@@ -68,6 +88,12 @@ public class HomeController {
         us.setLogged(false);
         cu.setCurrent(null);
         return "redirect:/";
+    }
+
+    @PostMapping("home/deletemsg")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void deleteMsg(@RequestParam("msgId") int msgId) {
+        mm.deleteById(msgId);
     }
 
     // TODO ADVANCED POST
