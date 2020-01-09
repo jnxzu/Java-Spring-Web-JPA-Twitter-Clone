@@ -123,9 +123,15 @@
         <div id="feed">
             <h1 th:if="${notFound}">No chirps found.</h1>
             <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
-                <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
-                    th:href="@{profile?id=}+${msg.authors[0].id}"></a>
+                <div class="name-del-holder">
+                    <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
+                        th:href="@{profile?id=}+${msg.authors[0].id}"></a>
+                    <span></span>
+                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}">DELETE</button>
+                </div>
                 <p th:text="${msg.content}"></p>
+                <img th:if="${msg.hasImage}" th:src="${'/uploaded/' + msg.id + '.png'}"
+                    th:alt="${'message ' + msg.id + ' image'}">
                 <div class="date-container">
                     <span th:text="${#dates.format(msg.create_date,'HH:mm dd.MM.yyyy')}"></span>
                 </div>

@@ -10,7 +10,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,9 +39,6 @@ public class HomeController {
     @Autowired
     MessageManager mm;
 
-    @Value("${app.upload.dir}")
-    public String uploadDir;
-
     @GetMapping("home")
     public String home(final Model model) {
         if (us.isLogged()) {
@@ -65,7 +61,7 @@ public class HomeController {
             msg.setHasImage(file == null ? false : true);
             mm.save(msg);
             if (file != null) {
-                final String imagePath = "src/main/resources/static/img/messages/";
+                final String imagePath = "file:C:/uploaded";
                 FileOutputStream output = new FileOutputStream(imagePath + msg.getId() + ".png");
                 output.write(file.getBytes());
                 output.close();
@@ -95,7 +91,4 @@ public class HomeController {
     public void deleteMsg(@RequestParam("msgId") int msgId) {
         mm.deleteById(msgId);
     }
-
-    // TODO ADVANCED POST
-    // TODO MSG EDIT
 }

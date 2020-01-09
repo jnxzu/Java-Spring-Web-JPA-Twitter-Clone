@@ -110,10 +110,9 @@
                         th:href="@{profile?id=}+${msg.authors[0].id}"></a>
                     <span></span>
                     <button class="del-msg" th:if="${msg.authors[0].id==cuid}">DELETE</button>
-                    <button class="edit-msg" th:if="${msg.authors[0].id==cuid}">EDIT</button>
                 </div>
                 <p th:text="${msg.content}"></p>
-                <img th:if="${msg.hasImage}" th:src="${'img/messages/' + msg.id + '.png'}" th:alt="${'message ' + msg.id + ' image'}">
+                <img th:if="${msg.hasImage}" th:src="${'/uploaded/' + msg.id + '.png'}" th:alt="${'message ' + msg.id + ' image'}">
                 <div class="date-container">
                     <span th:text="${#dates.format(msg.create_date,'HH:mm dd.MM.yyyy')}"></span>
                 </div>
