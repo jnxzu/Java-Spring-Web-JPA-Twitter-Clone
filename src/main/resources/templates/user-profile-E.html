@@ -82,38 +82,38 @@
             <img src="img/logo.jpg" alt="the fucking bird">
         </div>
         <div id="logout-div" class="header-side">
-            <button id="logout-btn">LOGOUT</button>
-            <button id="admin" th:if="${admin}">ADMIN PANEL</button>
-            <button th:if="!${myProfile}" id="profile">MY PROFILE</button>
-            <button id="home">HOME</button>
+            <button id="logout-btn" th:text="#{logout}"></button>
+            <button id="admin" th:if="${admin}" th:text="#{admin.panel}"></button>
+            <button th:if="!${myProfile}" id="profile" th:text="#{profile}"></button>
+            <button id="home" th:text="#{home}"></button>
         </div>
     </header>
     <div id="profile-info-edit">
         <div id="edit-form-container" th:if="${myProfile}">
             <form id="edit-form" method="POST" th:action="@{editUser}" th:object="${profileUser}">
                 <input type="text" class="input inh1" th:errorclass="input-error" th:field="*{firstName}"
-                    placeholder="First Name" />
+                    th:placeholder="#{first.name}" />
                 <input type="text" class="input inh1" th:errorclass="input-error" th:field="*{nick}"
-                    placeholder="Nickname" />
+                    th:placeholder="#{nickname}" />
                 <input type="text" class="input inh1" th:errorclass="input-error" th:field="*{lastName}"
-                    placeholder="Last Name" /><br />
+                    th:placeholder="#{last.name}" /><br />
                 <input type="text" class="input inh3" th:errorclass="input-error" th:field="*{email}"
-                    placeholder="Email" /><br />
+                    th:placeholder="#{email}" /><br />
                 <input type="password" class="input" th:errorclass="input-error" th:field="*{password}"
-                    placeholder="Password" /><br />
-                <button type="submit" id="save-edit">SAVE</button>
+                    th:placeholder="#{password}" /><br />
+                <button type="submit" id="save-edit" th:text="#{save}"></button>
             </form>
         </div>
     </div>
     <div id="feed-container">
         <div id="feed">
-            <h1 th:if="${notFound}">No chirps found.</h1>
+            <h1 th:if="${notFound}" th:text="#{notfound}"></h1>
             <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
                 <div class="name-del-holder">
                     <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
                         th:href="@{profile?id=}+${msg.authors[0].id}"></a>
                     <span></span>
-                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}">DELETE</button>
+                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}" th:text="#{delete}"></button>
                 </div>
                 <p th:text="${msg.content}"></p>
                 <img th:if="${msg.hasImage}" th:src="${'/uploaded/' + msg.id + '.png'}"

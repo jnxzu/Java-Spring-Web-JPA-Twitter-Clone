@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title th:text="${'Search: ' + searchphrase}"></title>
+    <title>CHIRPER</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/search.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -71,21 +71,21 @@
             CHIRPER
             <img src="img/logo.jpg" alt="the fucking bird"></div>
         <div id="logout-div" class="header-side">
-            <button id="logout-btn">LOGOUT</button>
-            <button id="admin" th:if="${admin}">ADMIN PANEL</button>
-            <button id="profile">MY PROFILE</button>
-            <button id="home">HOME</button>
+            <button id="logout-btn" th:text="#{logout}"></button>
+            <button id="admin" th:if="${admin}" th:text="#{admin.panel}"></button>
+            <button id="profile" th:text="#{profile}"></button>
+            <button id="home" th:text="#{home}"></button>
         </div>
     </header>
     <div id="feed-container">
         <div id="feed">
-            <h1 th:if="${notFound}">No chirps found.</h1>
+            <h1 th:if="${notFound}" th:text="#{notfound}"></h1>
             <div class="message" th:each="msg: ${messages}" th:id="${msg.id}">
                 <div class="name-del-holder">
                     <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
                         th:href="@{profile?id=}+${msg.authors[0].id}"></a>
                     <span></span>
-                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}">DELETE</button>
+                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}" th:text="#{delete}"></button>
                 </div>
                 <p th:text="${msg.content}"></p>
                 <img th:if="${msg.hasImage}" th:src="${'/uploaded/' + msg.id + '.png'}"

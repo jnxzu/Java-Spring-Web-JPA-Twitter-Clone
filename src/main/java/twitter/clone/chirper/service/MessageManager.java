@@ -20,6 +20,8 @@ public interface MessageManager extends JpaRepository<Message, Integer> {
 
     Message getOneById(int id);
 
+    Message findById(int id);
+
     List<Message> findAll();
 
     List<Message> findByContentIgnoreCaseContaining(String search);

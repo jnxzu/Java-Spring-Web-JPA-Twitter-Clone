@@ -24,48 +24,48 @@
             })
         })
     </script>
-    <title>Login</title>
+    <title>CHIRPER</title>
 </head>
 <!-- https://codepen.io/shayanea/pen/eVMMgO?editors=0110 -->
 
 <body>
-    <h1>Welcome to CHIRPER!</h1>
+    <h1 th:text="#{welcome}"></h1>
     <div class="form-structor">
         <div class="signup slide-up">
-            <h3 class="form-title" id="signup"><span>or</span>Sign up</h3>
+            <h3 class="form-title" id="signup" th:text="#{signup}"></h3>
             <form method="POST" th:action="@{/signup}" th:object="${chirperuser}">
                 <div class="form-holder">
                     <input type="text" class="input" th:errorclass="input-error" th:field="*{firstName}"
-                        placeholder="First Name" />
+                        th:placeholder="#{first.name}" />
                     <input type="text" class="input" th:errorclass="input-error" th:field="*{lastName}"
-                        placeholder="Last Name" />
+                        th:placeholder="#{last.name}" />
                     <input type="text" class="input" th:errorclass="input-error" th:field="*{nick}"
-                        placeholder="Nickname" />
+                        th:placeholder="#{nickname}" />
                     <input type="password" class="input" th:errorclass="input-error" th:field="*{password}"
-                        placeholder="Password" />
+                        th:placeholder="#{password}" />
                     <input type="text" class="input" th:errorclass="input-error" th:field="*{email}"
-                        placeholder="Email" />
+                        th:placeholder="#{email}" />
                 </div>
-                <button type="submit" class="submit-btn">Sign up</button>
+                <button type="submit" class="submit-btn" th:text="#{signup}"></button>
             </form>
         </div>
         <div class="login">
             <div class="center">
-                <h3 class="form-title" id="login"><span>or</span>Log in</h3>
+                <h3 class="form-title" id="login" th:text="#{login}"></h3>
                 <form method="POST" th:action="@{/login}" th:object="${chirperlogin}">
                     <div class="form-holder">
                         <input type="text" class="input" th:errorclass="input-error" th:field="*{nickname}"
-                            placeholder="Nickname" />
+                            th:placeholder="#{nickname}" />
                         <input type="password" class="input" th:errorclass="input-error" th:field="*{password}"
-                            placeholder="Password" />
+                            th:placeholder="#{password}" />
                     </div>
-                    <button type="submit" class="submit-btn">Log in</button>
+                    <button type="submit" class="submit-btn" th:text="#{login}"></button>
                 </form>
             </div>
         </div>
     </div>
-    <h3 th:if="${noUser!=null}">User not found.</h3>
-    <h3 th:if="${wrongPw!=null}">Wrong password.</h3>
+    <h3 th:if="${noUser!=null}" th:text="#{nouser}"></h3>
+    <h3 th:if="${wrongPw!=null}" th:text="#{wrongpw}"></h3>
 </body>
 
 </html>

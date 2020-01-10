@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Admin Panel</title>
+    <title>CHIRPER</title>
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/admin.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -56,9 +56,9 @@
         <div id="header-center"><img src="img/logo.jpg" alt="the fucking bird">CHIRPER<img src="img/logo.jpg"
                 alt="the fucking bird"></div>
         <div id="logout-div" class="header-side">
-            <button id="logout-btn">LOGOUT</button>
-            <button id="profile">MY PROFILE</button>
-            <button id="home">HOME</button>
+            <button id="logout-btn" th:text="#{logout}"></button>
+            <button id="profile" th:text="#{profile}"></button>
+            <button id="home" th:text="#{home}"></button>
         </div>
     </header>
     <div id="feed-container">
@@ -70,7 +70,7 @@
                 <a th:href="@{profile?id=}+${usr.id}"
                     th:text="${usr.firstName + ' &quot;' + usr.nick + '&quot; ' + usr.lastName}"></a>
                 <p th:text="${usr.email}"></p>
-                <p>Password: <span class="pw" th:text="${usr.password}"></span></p>
+                <p th:text="#{password}"><span class="pw" th:text="${usr.password}"></span></p>
             </div>
         </div>
     </div>

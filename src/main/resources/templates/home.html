@@ -85,9 +85,9 @@
             <img src="img/logo.jpg" alt="the fucking bird">
         </div>
         <div id="logout-div" class="header-side">
-            <button id="logout-btn">LOGOUT</button>
-            <button id="admin" th:if="${admin}">ADMIN PANEL</button>
-            <button id="profile">MY PROFILE</button>
+            <button id="logout-btn" th:text="#{logout}"></button>
+            <button id="admin" th:if="${admin}" th:text="#{admin.panel}"></button>
+            <button id="profile" th:text="#{profile}"></button>
         </div>
     </header>
     <div id="feed-container">
@@ -97,9 +97,9 @@
                 <div id="new-msg-bottom-bar">
                     <div id="new-msg-bottom-bar-left">
                         <input type="file" name="image" id="add-img"/>
-                        <label for="add-img" id="add-img-label">UPLOAD IMAGE</label>
+                        <label for="add-img" id="add-img-label" th:text="#{upload.image}"></label>
                     </div>
-                    <button type="submit" id="send-msg">POST</button>
+                    <button type="submit" id="send-msg" th:text="#{post}"></button>
                 </div>
             </form>
         </div>
@@ -109,7 +109,7 @@
                     <a th:text="${msg.authors[0].firstName + ' &quot;' + msg.authors[0].nick + '&quot; ' + msg.authors[0].lastName}"
                         th:href="@{profile?id=}+${msg.authors[0].id}"></a>
                     <span></span>
-                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}">DELETE</button>
+                    <button class="del-msg" th:if="${msg.authors[0].id==cuid}" th:text="#{delete}"></button>
                 </div>
                 <p th:text="${msg.content}"></p>
                 <img th:if="${msg.hasImage}" th:src="${'/uploaded/' + msg.id + '.png'}" th:alt="${'message ' + msg.id + ' image'}">
