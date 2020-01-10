@@ -16,7 +16,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/uploaded/**").addResourceLocations("file:/uploaded/");
+        registry.addResourceHandler("/uploaded/**").addResourceLocations("file:/");
     }
 
     @Bean

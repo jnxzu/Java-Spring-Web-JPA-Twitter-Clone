@@ -59,10 +59,8 @@ public class LoginController {
         }
         if (loginValidation(chirperlogin).equals("ok")) {
             us.setLogged(true);
-            System.out.println(chirperlogin);
             if (chirperlogin.getNickname().equals("administrator")) {
                 us.setAdmin(true);
-                System.out.println("admin");
             }
             cu.setCurrent(um.findByNick(chirperlogin.getNickname()));
             return "redirect:/home";

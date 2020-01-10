@@ -62,7 +62,7 @@ public class HomeController {
             if (file != null) {
                 System.out.println(file);
                 try {
-                    final String imagePath = "C:/uploaded/";
+                    final String imagePath = "file:/";
                     FileOutputStream output = new FileOutputStream(imagePath + msg.getId() + ".png");
                     output.write(file.getBytes());
                     output.close();
