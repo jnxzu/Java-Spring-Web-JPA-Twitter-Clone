@@ -61,7 +61,7 @@ public class HomeController {
             msg.setHasImage(file == null ? false : true);
             mm.save(msg);
             if (file != null) {
-                final String imagePath = "file:C:/uploaded";
+                final String imagePath = "C:/uploaded/";
                 FileOutputStream output = new FileOutputStream(imagePath + msg.getId() + ".png");
                 output.write(file.getBytes());
                 output.close();
