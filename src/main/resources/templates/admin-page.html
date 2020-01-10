@@ -70,7 +70,7 @@
                 <a th:href="@{profile?id=}+${usr.id}"
                     th:text="${usr.firstName + ' &quot;' + usr.nick + '&quot; ' + usr.lastName}"></a>
                 <p th:text="${usr.email}"></p>
-                <p th:text="#{password}"><span class="pw" th:text="${usr.password}"></span></p>
+                <p><span th:text="#{password.hide}"></span><span class="pw" th:text="${usr.password}"></span></span></p>
             </div>
         </div>
     </div>
