@@ -1,7 +1,6 @@
 package twitter.clone.chirper.controller;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -55,16 +54,21 @@ public class HomeController {
 
     @RequestMapping(value = "home", method = RequestMethod.POST, consumes = { "multipart/form-data" })
     public String newmsg(final Model model, @Valid final Message msg, Errors errors,
-            @RequestParam(name = "image", required = false) MultipartFile file) throws IOException {
+            @RequestParam(name = "image", required = false) MultipartFile file) {
         if (!errors.hasErrors()) {
             msg.setAuthors(Arrays.asList(cu.getCurrent()));
             msg.setHasImage(file == null ? false : true);
             mm.save(msg);
             if (file != null) {
-                final String imagePath = "C:/uploaded/";
-                FileOutputStream output = new FileOutputStream(imagePath + msg.getId() + ".png");
-                output.write(file.getBytes());
-                output.close();
+                System.out.println(file);
+                try {
+                    final String imagePath = "C:/uploaded/";
+                    FileOutputStream output = new FileOutputStream(imagePath + msg.getId() + ".png");
+                    output.write(file.getBytes());
+                    output.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             model.addAttribute("message", new Message());
             List<Message> allMsgs = mm.findAll();
