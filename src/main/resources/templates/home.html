@@ -39,8 +39,9 @@
                 })
             })
             $(document).on("change", "#add-img", function () {
-                var type = $(this)[0].files[0].type
-                var size = $(this)[0].files[0].size
+                var file = $(this)[0].files[0]
+                var type = file.type
+                var size = file.size
                 if (type == "image/png") {
                     if (size < 1000000) {
                         $("#add-img-label").addClass("added-img")
@@ -54,6 +55,27 @@
                     $("#add-img-label").text("INCORRECT FILE")
                 }
             });
+            $(document).on("change", "#add-txt", function () {
+                var file = $(this)[0].files[0]
+                var type = file.type
+                var size = file.size
+                if (type == "text/plain") {
+                    if (size <= 140) {
+                        $("#add-txt-label").addClass("added-txt")
+                        $("#add-txt-label").text("TEXT IMPORTED")
+                        var reader = new FileReader()
+                        reader.readAsText(file)
+                        $("#textarea")[0].value = reader.result
+                    } else {
+                        $("#add-txt-label").removeClass("added-txt")
+                        $("#add-txt-label").text("TEXT TOO LONG")
+                    }
+                } else {
+                    $("#add-txt-label").removeClass("added-txt")
+                    $("#add-txt-label").text("INCORRECT FILE")
+                }
+            });
+
         })
     </script>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -93,11 +115,13 @@
     <div id="feed-container">
         <div id="new-message">
             <form method="POST" enctype="multipart/form-data" th:action="@{home}" th:object="${message}">
-                <textarea maxlength="140" th:field="*{content}" th:placeholder="${#fields.hasErrors('content')} ? 'Cannot post empty Chirp!' : 'How YOU doin?'"></textarea>
+                <textarea id="textarea" maxlength="140" th:field="*{content}" th:placeholder="${#fields.hasErrors('content')} ? 'Cannot post empty Chirp!' : #{newchirp}"></textarea>
                 <div id="new-msg-bottom-bar">
                     <div id="new-msg-bottom-bar-left">
                         <input type="file" name="image" id="add-img"/>
                         <label for="add-img" id="add-img-label" th:text="#{upload.image}"></label>
+                        <input type="file" name="txt" id="add-txt"/>
+                        <label for="add-txt" id="add-txt-label" th:text="#{upload.txt}"></label>
                     </div>
                     <button type="submit" id="send-msg" th:text="#{post}"></button>
                 </div>

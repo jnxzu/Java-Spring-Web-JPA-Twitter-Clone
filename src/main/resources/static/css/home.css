@@ -2,7 +2,8 @@
   width: 5vw;
 }
 #send-msg,
-#add-img-label {
+#add-img-label,
+#add-txt-label {
   border: none;
   background: var(--purpurish);
   color: var(--white-accent);
@@ -10,7 +11,8 @@
   transition: all 0.3s ease;
 }
 #send-msg:hover,
-#add-img-label:hover {
+#add-img-label:hover,
+#add-txt-label:hover {
   background: var(--orangeish);
 }
 #new-message {
@@ -44,7 +46,8 @@
   height: 100%;
   flex-grow: 1;
 }
-#add-img {
+#add-img,
+#add-txt {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
@@ -52,12 +55,14 @@
   position: absolute;
   z-index: -1;
 }
-#add-img + label {
+#add-img + label,
+#add-txt + label {
   display: inline-block;
   justify-content: center;
   vertical-align: middle;
   padding: 1vmin;
 }
-.added-img {
+.added-img,
+.added-txt {
   border-radius: 10px;
 }
