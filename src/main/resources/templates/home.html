@@ -63,9 +63,11 @@
                     if (size <= 140) {
                         $("#add-txt-label").addClass("added-txt")
                         $("#add-txt-label").text("TEXT IMPORTED")
-                        var reader = new FileReader()
+                        reader = new FileReader()
                         reader.readAsText(file)
-                        $("#textarea")[0].value = reader.result
+                        reader.onloadend = function (e) {
+                            $("#textarea")[0].value = e.target.result
+                        }
                     } else {
                         $("#add-txt-label").removeClass("added-txt")
                         $("#add-txt-label").text("TEXT TOO LONG")
