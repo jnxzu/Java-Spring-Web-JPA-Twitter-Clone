@@ -57,9 +57,9 @@ public class HomeController {
             @RequestParam(name = "image", required = false) MultipartFile file) {
         if (!errors.hasErrors()) {
             msg.setAuthors(Arrays.asList(cu.getCurrent()));
-            msg.setHasImage(file == null ? false : true);
+            msg.setHasImage(file.isEmpty() ? false : true);
             mm.save(msg);
-            if (file != null) {
+            if (!file.isEmpty()) {
                 System.out.println(file);
                 try {
                     final String imagePath = "C:/uploaded/";
