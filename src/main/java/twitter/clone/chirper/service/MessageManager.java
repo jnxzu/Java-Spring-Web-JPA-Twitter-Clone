@@ -11,16 +11,10 @@ import twitter.clone.chirper.domain.Message;
 public interface MessageManager extends JpaRepository<Message, Integer> {
     <S extends Message> S save(S msg);
 
-    void delete(Message msg);
-
     void deleteById(int id);
 
     @Transactional
     void deleteByAuthors_Id(int id);
-
-    Message getOneById(int id);
-
-    Message findById(int id);
 
     List<Message> findAll();
 

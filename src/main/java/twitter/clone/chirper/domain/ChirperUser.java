@@ -45,4 +45,13 @@ public class ChirperUser {
     @ManyToMany(mappedBy = "authors")
     @JsonIgnore
     private List<Message> messages;
+
+    public ChirperUser(int id, String firstName, String lastName, String nick, String password, String email){
+        this.id=id;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.nick=nick;
+        this.password=password;
+        this.email=email;
+    }
 }
