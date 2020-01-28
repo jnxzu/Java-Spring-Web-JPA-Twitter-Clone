@@ -12,7 +12,7 @@ public class ReactiveUserDao {
     private ConnectionFactory cf;
 
     public ReactiveUserDao() {
-        this.cf = new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder().host("localhost")
+        this.cf = new PostgresqlConnectionFactory(PostgresqlConnectionConfiguration.builder().host("thechirper.herokuapp.com")
                 .username("postgres").password("admin").database("postgres").build());
     }
 
