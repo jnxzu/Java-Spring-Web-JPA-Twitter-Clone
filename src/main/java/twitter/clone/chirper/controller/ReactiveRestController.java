@@ -2,7 +2,10 @@ package twitter.clone.chirper.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,82 +34,82 @@ public class ReactiveRestController {
 
     @GetMapping("userlist")
     public Flux<ChirperUser> showAllUsers() {
-        if (us.isAdmin())
-            return udao.findAll();
-        else
-            return null;
+        // if (us.isAdmin())
+        return udao.findAll();
+        // else
+        // return null;
     }
 
     @GetMapping("user")
     public Mono<ChirperUser> showUser(@RequestParam("id") int id) {
-        if (us.isAdmin())
-            return udao.findOneById(id);
-        else
-            return null;
+        // if (us.isAdmin())
+        return udao.findOneById(id);
+        // else
+        // return null;
     }
 
-    @GetMapping("adduser")
+    @PutMapping("adduser")
     public Mono<ChirperUser> addUser(@RequestParam("fname") String fname, @RequestParam("lname") String lname,
             @RequestParam("nick") String nick, @RequestParam("mail") String mail, @RequestParam("pass") String pass) {
-        if (us.isAdmin()) {
-            ChirperUser newUser = new ChirperUser();
-            newUser.setFirstName(fname);
-            newUser.setLastName(lname);
-            newUser.setNick(nick);
-            newUser.setEmail(mail);
-            newUser.setPassword(pass);
-            return udao.addUser(newUser);
-        } else
-            return null;
+        // if (us.isAdmin()) {
+        ChirperUser newUser = new ChirperUser();
+        newUser.setFirstName(fname);
+        newUser.setLastName(lname);
+        newUser.setNick(nick);
+        newUser.setEmail(mail);
+        newUser.setPassword(pass);
+        return udao.addUser(newUser);
+        // } else
+        // return null;
     }
 
-    @GetMapping("deleteuser")
+    @DeleteMapping("deleteuser")
     public Mono<ChirperUser> deleteUser(@RequestParam("id") int id) {
-        if (us.isAdmin())
-            return udao.deleteUser(id);
-        else
-            return null;
+        // if (us.isAdmin())
+        return udao.deleteUser(id);
+        // else
+        // return null;
     }
 
-    @GetMapping("changenick")
+    @PostMapping("changenick")
     public Mono<ChirperUser> changeNickname(@RequestParam("id") int id, @RequestParam("nick") String nick) {
-        if (us.isAdmin())
-            return udao.changeNickname(id, nick);
-        else
-            return null;
+        // if (us.isAdmin())
+        return udao.changeNickname(id, nick);
+        // else
+        // return null;
     }
 
     // MESSAGES
 
     @GetMapping("messagelist")
     public Flux<Message> showAllMessages() {
-        if (us.isAdmin())
-            return mdao.findAll();
-        else
-            return null;
+        // if (us.isAdmin())
+        return mdao.findAll();
+        // else
+        // return null;
     }
 
     @GetMapping("message")
     public Mono<Message> showMessage(@RequestParam("id") int id) {
-        if (us.isAdmin())
-            return mdao.findOneById(id);
-        else
-            return null;
+        // if (us.isAdmin())
+        return mdao.findOneById(id);
+        // else
+        // return null;
     }
 
-    @GetMapping("deletemessage")
+    @DeleteMapping("deletemessage")
     public Mono<Message> deleteMessage(@RequestParam("id") int id) {
-        if (us.isAdmin())
-            return mdao.deleteMessage(id);
-        else
-            return null;
+        // if (us.isAdmin())
+        return mdao.deleteMessage(id);
+        // else
+        // return null;
     }
 
-    @GetMapping("editmessage")
+    @PostMapping("editmessage")
     public Mono<Message> editMessage(@RequestParam("id") int id, @RequestParam("content") String content) {
-        if (us.isAdmin())
-            return mdao.editMessage(id, content);
-        else
-            return null;
+        // if (us.isAdmin())
+        return mdao.editMessage(id, content);
+        // else
+        // return null;
     }
 }
